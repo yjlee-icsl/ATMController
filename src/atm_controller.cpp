@@ -15,6 +15,9 @@ void ATMController::run() {
             std::cout << "\nFinished. Stopping ATM" << std::endl;
             break;
         }
+        if (&istream_type_ != &std::cin) {
+            std::cout << current_card_id << std::endl;
+        }
 
         // check card id is in the bank database
         // if not in the bank database, reject current card
@@ -37,6 +40,9 @@ void ATMController::run() {
             std::cout << "What service do you want?" << std::endl;
             std::cout << "1. See balance 2. Deposit 3. Withdraw 0. Exit" << std::endl;
             istream_type_ >> choice;
+            if (&istream_type_ != &std::cin) {
+                std::cout << choice << std::endl;
+            }
 
             // If input type is invalid (not digit), try again.
             if (!is_non_neg_digit(choice)) {
@@ -62,6 +68,9 @@ bool ATMController::verifyPIN() {
     for (int try_count = 1; try_count < max_pin_try_num_+1; try_count++) {
         std::cout << "Please enter the PIN number: ";
         istream_type_ >> pin_number;
+        if (&istream_type_ != &std::cin) {
+            std::cout << pin_number << std::endl;
+        }
         if (bank_.verifyPIN(current_card_id,  pin_number)) {
             pin_verified = true;
             break;
