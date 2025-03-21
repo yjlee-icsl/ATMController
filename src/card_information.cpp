@@ -3,7 +3,7 @@
 CardInfo::CardInfo(const std::string pin_number, unsigned long long balance)
 : pin_number_(pin_number), balance_(balance) {}
 
-std::string CardInfo::getPIN() {
+std::string CardInfo::getPIN() const {
     return pin_number_;
 }
 

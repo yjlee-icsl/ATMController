@@ -6,7 +6,7 @@ class CardInfo {
 public:
     CardInfo(const std::string pin_number, unsigned long long balance);
 
-    std::string getPIN();
+    std::string getPIN() const;
 
     unsigned long long seeBalance();
     void deposit(unsigned long long amount);
