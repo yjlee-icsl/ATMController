@@ -33,7 +33,7 @@ void ATMController::run() {
                 continue;
             }
             // If 'Exit' is choosed, finish this card
-            if (!provideService(stoi(choice))) break;
+            if (!provideService(std::stoi(choice))) break;
             std::cout << std::endl;
         }
     }
@@ -82,7 +82,7 @@ bool ATMController::provideService(int choice) {
                 std::cout << "Invalid amount. Please try again\n";
                 break;
             }
-            bank_.deposit(current_card_id, stoi(amount));
+            bank_.deposit(current_card_id, std::stoi(amount));
             std::cout << "Deposit is successfully done (now, " << bank_.seeBalance(current_card_id) << "$)" << std::endl;
             break;
         case 3:
@@ -92,7 +92,7 @@ bool ATMController::provideService(int choice) {
                 std::cout << "Invalid amount. Please try again\n";
                 break;
             }
-            if (bank_.withdraw(current_card_id, stoi(amount))) {
+            if (bank_.withdraw(current_card_id, std::stoi(amount))) {
                 std::cout << "Withdraw is successfully done (now, " << bank_.seeBalance(current_card_id) << "$)" << std::endl;
             } else {
                 std::cout << "Your balance is not enough (now, " << bank_.seeBalance(current_card_id) << "$)" << std::endl;
