@@ -89,6 +89,9 @@ bool ATMController::provideService(int choice) {
         case 2:
             std::cout << "Enter deposit amount: ";
             istream_type_ >> amount;
+            if (&istream_type_ != &std::cin) {
+                std::cout << amount << std::endl;
+            }
             if (!is_non_neg_digit(amount)) {
                 std::cout << "Invalid amount. Please try again\n";
                 break;
@@ -99,6 +102,9 @@ bool ATMController::provideService(int choice) {
         case 3:
             std::cout << "Enter withdraw amount: ";
             istream_type_ >> amount;
+            if (&istream_type_ != &std::cin) {
+                std::cout << amount << std::endl;
+            }
             if (!is_non_neg_digit(amount)) {
                 std::cout << "Invalid amount. Please try again\n";
                 break;
