@@ -18,12 +18,19 @@ void ATMController::run() {
         std::cout << "PIN number is verified\n" << std::endl;
 
         while (true) {
-            int choice;
+            // get service to provide
+            std::string choice;
             std::cout << "What service do you want?" << std::endl;
             std::cout << "1. See balance 2. Deposit 3. Withdraw 0. Exit" << std::endl;
-            std::cout << "Type: ";
             std::cin >> choice;
-            if (!provideService(choice)) break;
+
+            // If input type is invalid (not digit), try again.
+            if (!is_digit(choice)) {
+                std::cout << "Invalid type of input. Please try again\n" << std::endl;
+                continue;
+            }
+            // If 'Exit' is choosed, finish this card
+            if (!provideService(stoi(choice))) break;
             std::cout << std::endl;
         }
     }
@@ -58,7 +65,7 @@ bool ATMController::verifyPIN() {
 }
 
 bool ATMController::provideService(int choice) {
-    int amount;
+    std::string amount;
 
     switch (choice) {
         case 1:
@@ -67,13 +74,21 @@ bool ATMController::provideService(int choice) {
         case 2:
             std::cout << "Amout of deposit: ";
             std::cin >> amount;
-            bank_.deposit(current_card_id, amount);
+            if (!is_digit(amount)) {
+                std::cout << "Invalid amount.\n";
+                break;
+            }
+            bank_.deposit(current_card_id, stoi(amount));
             std::cout << "Deposit is successfully done (" << bank_.seeBalance(current_card_id) << ")" << std::endl;
             break;
         case 3:
             std::cout << "Amout of withdraw: ";
             std::cin >> amount;
-            if (bank_.withdraw(current_card_id, amount)) {
+            if (!is_digit(amount)) {
+                std::cout << "Invalid amount.\n";
+                break;
+            }
+            if (bank_.withdraw(current_card_id, stoi(amount))) {
                 std::cout << "Withdraw is successfully done (" << bank_.seeBalance(current_card_id) << ")" << std::endl;
             } else {
                 std::cout << "Your balance is not enough (" << bank_.seeBalance(current_card_id) << ")" << std::endl;
@@ -83,8 +98,17 @@ bool ATMController::provideService(int choice) {
             std::cout << "Your work is finished\n" << std::endl;
             return false;
         default:
-            std::cout << "You choose wrong, please try again\n";
+            std::cout << "Invalid type of input. Please try again\n" << std::endl;
             break;
+    }
+    return true;
+}
+
+bool is_digit(const std::string& input) {
+    for (auto c : input) {
+        if (!std::isdigit(c)) {
+            return false;
+        }
     }
     return true;
 }

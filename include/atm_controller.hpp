@@ -19,3 +19,5 @@ private:
     bool verifyPIN();
     bool provideService(int choice);
 };
+
+bool is_digit(const std::string& input);
