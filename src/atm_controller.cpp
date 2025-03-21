@@ -2,12 +2,20 @@
 #include <unistd.h>
 #include "atm_controller.hpp"
 
-ATMController::ATMController(BankAPI& bank, int max_pin_try_num)
-: bank_(bank), max_pin_try_num_(max_pin_try_num) {}
+ATMController::ATMController(BankAPI& bank, std::istream& istream_type, int max_pin_try_num)
+: bank_(bank), istream_type_(istream_type), max_pin_try_num_(max_pin_try_num) {}
 
 void ATMController::run() {
     
     while (true) {
+        std::cout << "Insert your card (type your card id or type 'exit' to quit): ";
+
+        // get card id
+        if (!(istream_type_ >> current_card_id) || (current_card_id == "exit")) {
+            std::cout << "\nFinished. Stopping ATM" << std::endl;
+            break;
+        }
+
         // check card id is in the bank database
         // if not in the bank database, reject current card
         if (!this->check_validity()) {
@@ -28,7 +36,7 @@ void ATMController::run() {
             std::string choice;
             std::cout << "What service do you want?" << std::endl;
             std::cout << "1. See balance 2. Deposit 3. Withdraw 0. Exit" << std::endl;
-            std::cin >> choice;
+            istream_type_ >> choice;
 
             // If input type is invalid (not digit), try again.
             if (!is_non_neg_digit(choice)) {
@@ -44,8 +52,6 @@ void ATMController::run() {
 }
 
 bool ATMController::check_validity() {
-    std::cout << "Insert your card (now, just type your card ID): ";
-    std::cin >> current_card_id;
     return bank_.check_validity(current_card_id);
 }
 
@@ -55,7 +61,7 @@ bool ATMController::verifyPIN() {
 
     for (int try_count = 1; try_count < max_pin_try_num_+1; try_count++) {
         std::cout << "Please enter the PIN number: ";
-        std::cin >> pin_number;
+        istream_type_ >> pin_number;
         if (bank_.verifyPIN(current_card_id,  pin_number)) {
             pin_verified = true;
             break;
@@ -82,7 +88,7 @@ bool ATMController::provideService(int choice) {
             break;
         case 2:
             std::cout << "Enter deposit amount: ";
-            std::cin >> amount;
+            istream_type_ >> amount;
             if (!is_non_neg_digit(amount)) {
                 std::cout << "Invalid amount. Please try again\n";
                 break;
@@ -92,7 +98,7 @@ bool ATMController::provideService(int choice) {
             break;
         case 3:
             std::cout << "Enter withdraw amount: ";
-            std::cin >> amount;
+            istream_type_ >> amount;
             if (!is_non_neg_digit(amount)) {
                 std::cout << "Invalid amount. Please try again\n";
                 break;

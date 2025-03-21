@@ -5,12 +5,13 @@
 
 class ATMController {
 public:
-    ATMController(BankAPI& bank, int max_pin_try_num=3);
+    ATMController(BankAPI& bank, std::istream& istream_type=std::cin, int max_pin_try_num=3);
 
     void run();
 
 private:
     BankAPI bank_;
+    std::istream& istream_type_;
 
     int max_pin_try_num_;
     std::string current_card_id;
