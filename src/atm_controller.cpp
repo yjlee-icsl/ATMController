@@ -28,7 +28,7 @@ void ATMController::run() {
             std::cin >> choice;
 
             // If input type is invalid (not digit), try again.
-            if (!is_digit(choice)) {
+            if (!is_non_neg_digit(choice)) {
                 std::cout << "Invalid type of input. Please try again\n" << std::endl;
                 continue;
             }
@@ -78,7 +78,7 @@ bool ATMController::provideService(int choice) {
         case 2:
             std::cout << "Enter deposit amount: ";
             std::cin >> amount;
-            if (!is_digit(amount)) {
+            if (!is_non_neg_digit(amount)) {
                 std::cout << "Invalid amount. Please try again\n";
                 break;
             }
@@ -88,7 +88,7 @@ bool ATMController::provideService(int choice) {
         case 3:
             std::cout << "Enter withdraw amount: ";
             std::cin >> amount;
-            if (!is_digit(amount)) {
+            if (!is_non_neg_digit(amount)) {
                 std::cout << "Invalid amount. Please try again\n";
                 break;
             }
@@ -108,11 +108,17 @@ bool ATMController::provideService(int choice) {
     return true;
 }
 
-bool is_digit(const std::string& input) {
+bool is_non_neg_digit(const std::string& input) {
+    // check if the input is integer
     for (auto c : input) {
         if (!std::isdigit(c)) {
             return false;
         }
     }
-    return true;
+
+    // check if the input is non negative value
+    if (std::stoi(input) >= 0) {
+        return true;
+    }
+    return false;
 }
