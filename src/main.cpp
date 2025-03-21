@@ -1,11 +1,16 @@
 #include <iostream>
+#include <unistd.h>
+#include <filesystem>
+#include <string>
 #include "bank_api.hpp"
 #include "atm_controller.hpp"
 
-int main() {
+int main() {          
+    std::string project_root = PROJECT_ROOT_PATH;
+    std::string database_path = "/database/card_infos.txt";
+
     BankAPI bank;
-    bank.addCard("A", "0000", 1000);
-    bank.addCard("B", "1234", 5000);
+    if (!bank.load_database(project_root + database_path)) return 1;
 
     std::cout << "\nAll card information (just for testing)" << std::endl;
     bank.printAllCardInfo();

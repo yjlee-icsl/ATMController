@@ -6,9 +6,10 @@
 class BankAPI {
 public:
     BankAPI();
-    void printAllCardInfo();
 
+    bool load_database(const std::string& database_filename);
     bool addCard(const std::string& card_id, const std::string& pin_number, unsigned long long balance);
+    void printAllCardInfo();
 
     bool check_validity(const std::string& card_id); 
     bool verifyPIN(const std::string& card_id, const std::string& pin_number);

@@ -67,6 +67,7 @@ bool ATMController::verifyPIN() {
         } else {
             // after final failure
             std::cout << "Too many failed. Please remove your card" << std::endl;
+            std::cout << std::endl;
         }
     }
     return pin_verified;
