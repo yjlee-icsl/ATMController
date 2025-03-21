@@ -3,6 +3,13 @@
 
 BankAPI::BankAPI() {}
 
+void BankAPI::printAllCardInfo() {
+    for (auto card : card_database) {
+        std::cout << "Card " << card.first << " (PIN: "
+        << card.second.getPIN() << ", Balance: " << card.second.seeBalance() << ")" << std::endl;
+    }
+}
+
 bool BankAPI::addCard(const std::string& card_id, const std::string& pin_number, int balance) {
     if (card_database.find(card_id) == card_database.end()) {
         card_database.emplace(card_id, CardInfo(pin_number, balance));

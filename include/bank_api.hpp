@@ -6,6 +6,7 @@
 class BankAPI {
 public:
     BankAPI();
+    void printAllCardInfo();
 
     bool addCard(const std::string& card_id, const std::string& pin_number, int balance);
 

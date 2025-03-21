@@ -6,6 +6,9 @@ int main() {
     BankAPI bank;
     bank.addCard("A", "0000", 1000);
     bank.addCard("B", "1234", 5000);
+
+    std::cout << "\nAll card information (just for testing)" << std::endl;
+    bank.printAllCardInfo();
     std::cout << std::endl;
 
     ATMController atm(bank);
