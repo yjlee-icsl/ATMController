@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unistd.h>
 #include "atm_controller.hpp"
 
 ATMController::ATMController(BankAPI& bank, int max_pin_try_num)
@@ -17,7 +18,9 @@ void ATMController::run() {
         // check pin number
         // if pin number is incorrect, skip this current card (current user)
         if (!verifyPIN()) continue;
-        std::cout << "PIN number is verified\n" << std::endl;
+        std::cout << "PIN number is verified" << std::endl;
+        sleep(1);
+        std::cout << std::endl;
 
         // if card id and pin number is verfied, provide ATM service
         while (true) {
@@ -30,6 +33,7 @@ void ATMController::run() {
             // If input type is invalid (not digit), try again.
             if (!is_non_neg_digit(choice)) {
                 std::cout << "Invalid type of input. Please try again\n" << std::endl;
+                sleep(1);
                 continue;
             }
             // If 'Exit' is choosed, finish this card
@@ -100,11 +104,13 @@ bool ATMController::provideService(int choice) {
             break;
         case 0:
             std::cout << "Your work is finished\n" << std::endl;
+            sleep(2);
             return false;
         default:
             std::cout << "Invalid type of input. Please try again\n" << std::endl;
             break;
     }
+    sleep(2);
     return true;
 }
 
