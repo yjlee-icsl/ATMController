@@ -10,7 +10,7 @@ void ATMController::run() {
         // check card id is in the bank database
         // if not in the bank database, reject current card
         if (!this->check_validity()) {
-            std::cout << "Error: your card is not in the bank database" << std::endl;
+            std::cout << "Card " << current_card_id <<" is not in the bank database" << std::endl;
             continue;
         }
 
@@ -79,23 +79,23 @@ bool ATMController::provideService(int choice) {
             std::cout << "Enter deposit amount: ";
             std::cin >> amount;
             if (!is_digit(amount)) {
-                std::cout << "Invalid amount.\n";
+                std::cout << "Invalid amount. Please try again\n";
                 break;
             }
             bank_.deposit(current_card_id, stoi(amount));
-            std::cout << "Deposit is successfully done (" << bank_.seeBalance(current_card_id) << ")" << std::endl;
+            std::cout << "Deposit is successfully done (now, " << bank_.seeBalance(current_card_id) << "$)" << std::endl;
             break;
         case 3:
             std::cout << "Enter withdraw amount: ";
             std::cin >> amount;
             if (!is_digit(amount)) {
-                std::cout << "Invalid amount.\n";
+                std::cout << "Invalid amount. Please try again\n";
                 break;
             }
             if (bank_.withdraw(current_card_id, stoi(amount))) {
-                std::cout << "Withdraw is successfully done (" << bank_.seeBalance(current_card_id) << ")" << std::endl;
+                std::cout << "Withdraw is successfully done (now, " << bank_.seeBalance(current_card_id) << "$)" << std::endl;
             } else {
-                std::cout << "Your balance is not enough (" << bank_.seeBalance(current_card_id) << ")" << std::endl;
+                std::cout << "Your balance is not enough (now, " << bank_.seeBalance(current_card_id) << "$)" << std::endl;
             }
             break;
         case 0:
