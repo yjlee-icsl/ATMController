@@ -109,16 +109,12 @@ bool ATMController::provideService(int choice) {
 }
 
 bool is_non_neg_digit(const std::string& input) {
-    // check if the input is integer
+    // check if the input is non negative digit
     for (auto c : input) {
+        // here, also reject minus sign
         if (!std::isdigit(c)) {
             return false;
         }
     }
-
-    // check if the input is non negative value
-    if (std::stoull(input) >= 0) {
-        return true;
-    }
-    return false;
+    return true;
 }
