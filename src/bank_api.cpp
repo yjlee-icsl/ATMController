@@ -11,7 +11,7 @@ void BankAPI::printAllCardInfo() {
     }
 }
 
-bool BankAPI::addCard(const std::string& card_id, const std::string& pin_number, int balance) {
+bool BankAPI::addCard(const std::string& card_id, const std::string& pin_number, unsigned long long balance) {
     // add card to database
     if (card_database.find(card_id) == card_database.end()) {
         // if card is not in bank database, add the card to bank database
@@ -35,14 +35,14 @@ bool BankAPI::verifyPIN(const std::string& card_id, const std::string& pin_numbe
     return (card_database.find(card_id)->second.getPIN() == pin_number);
 }
 
-int BankAPI::seeBalance(const std::string& card_id) {
+unsigned long long BankAPI::seeBalance(const std::string& card_id) {
     return card_database.find(card_id)->second.seeBalance();
 }
 
-void BankAPI::deposit(const std::string& card_id, int amount) {
+void BankAPI::deposit(const std::string& card_id, unsigned long long amount) {
     card_database.find(card_id)->second.deposit(amount);
 }
 
-bool BankAPI::withdraw(const std::string& card_id, int amount) {
+bool BankAPI::withdraw(const std::string& card_id, unsigned long long amount) {
     return card_database.find(card_id)->second.withdraw(amount);
 }

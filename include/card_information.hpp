@@ -4,15 +4,15 @@
 
 class CardInfo {
 public:
-    CardInfo(const std::string pin_number, int balance);
+    CardInfo(const std::string pin_number, unsigned long long balance);
 
     std::string getPIN();
 
-    int seeBalance();
-    void deposit(int amount);
-    bool withdraw(int amount);
+    unsigned long long seeBalance();
+    void deposit(unsigned long long amount);
+    bool withdraw(unsigned long long amount);
 
 private:
     const std::string pin_number_;
-    int balance_;
+    unsigned long long balance_;
 };

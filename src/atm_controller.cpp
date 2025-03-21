@@ -33,7 +33,7 @@ void ATMController::run() {
                 continue;
             }
             // If 'Exit' is choosed, finish this card
-            if (!provideService(std::stoi(choice))) break;
+            if (!provideService(std::stoull(choice))) break;
             std::cout << std::endl;
         }
     }
@@ -82,7 +82,7 @@ bool ATMController::provideService(int choice) {
                 std::cout << "Invalid amount. Please try again\n";
                 break;
             }
-            bank_.deposit(current_card_id, std::stoi(amount));
+            bank_.deposit(current_card_id, std::stoull(amount));
             std::cout << "Deposit is successfully done (now, " << bank_.seeBalance(current_card_id) << "$)" << std::endl;
             break;
         case 3:
@@ -92,7 +92,7 @@ bool ATMController::provideService(int choice) {
                 std::cout << "Invalid amount. Please try again\n";
                 break;
             }
-            if (bank_.withdraw(current_card_id, std::stoi(amount))) {
+            if (bank_.withdraw(current_card_id, std::stoull(amount))) {
                 std::cout << "Withdraw is successfully done (now, " << bank_.seeBalance(current_card_id) << "$)" << std::endl;
             } else {
                 std::cout << "Your balance is not enough (now, " << bank_.seeBalance(current_card_id) << "$)" << std::endl;
@@ -117,7 +117,7 @@ bool is_non_neg_digit(const std::string& input) {
     }
 
     // check if the input is non negative value
-    if (std::stoi(input) >= 0) {
+    if (std::stoull(input) >= 0) {
         return true;
     }
     return false;
