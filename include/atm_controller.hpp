@@ -20,4 +20,4 @@ private:
     bool provideService(int choice);
 };
 
-bool is_digit(const std::string& input);
+bool is_non_neg_digit(const std::string& input);
