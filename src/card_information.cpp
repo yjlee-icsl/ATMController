@@ -12,14 +12,18 @@ int CardInfo::seeBalance() {
 }
 
 void CardInfo::deposit(int amount) {
+    // add deposit amount to balance
     balance_ = balance_ + amount;
 }
 
 bool CardInfo::withdraw(int amount) {
     if (amount <= balance_) {
+        // if balance is same with or large than withdraw amount
+        // reduece balance by the withdraw amount
         balance_ = balance_ - amount;
         return true;
     } else {
+        // if balance is smaller than withdraw amount, return false
         return false;
     }
 }

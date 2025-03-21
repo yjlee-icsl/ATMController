@@ -7,16 +7,19 @@ ATMController::ATMController(BankAPI& bank, int max_pin_try_num)
 void ATMController::run() {
     
     while (true) {
-        // check card id is in bank database
+        // check card id is in the bank database
+        // if not in the bank database, reject current card
         if (!this->check_validity()) {
-            std::cout << "Error: your card is not in bank database" << std::endl;
+            std::cout << "Error: your card is not in the bank database" << std::endl;
             continue;
         }
 
-        // check pin number is correct. If incorrect pin number, skip to next user
+        // check pin number
+        // if pin number is incorrect, skip this current card (current user)
         if (!verifyPIN()) continue;
         std::cout << "PIN number is verified\n" << std::endl;
 
+        // if card id and pin number is verfied, provide ATM service
         while (true) {
             // get service to provide
             std::string choice;
@@ -54,11 +57,12 @@ bool ATMController::verifyPIN() {
             break;
         }
 
-        // if pin number is incorrect, print message
         if (try_count < max_pin_try_num_) {
+            // if pin number is incorrect, try again
             std::cout << "PIN number is incorrect, try again (" << try_count << "/" << max_pin_try_num_ << ")" << std::endl;
         } else {
-            std::cout << "Remove your card" << std::endl;
+            // after final failure
+            std::cout << "Too many failed. Please remove your card" << std::endl;
         }
     }
     return pin_verified;
@@ -72,7 +76,7 @@ bool ATMController::provideService(int choice) {
             std::cout << "Your balance is: " << bank_.seeBalance(current_card_id) << "$" << std::endl;
             break;
         case 2:
-            std::cout << "Amout of deposit: ";
+            std::cout << "Enter deposit amount: ";
             std::cin >> amount;
             if (!is_digit(amount)) {
                 std::cout << "Invalid amount.\n";
@@ -82,7 +86,7 @@ bool ATMController::provideService(int choice) {
             std::cout << "Deposit is successfully done (" << bank_.seeBalance(current_card_id) << ")" << std::endl;
             break;
         case 3:
-            std::cout << "Amout of withdraw: ";
+            std::cout << "Enter withdraw amount: ";
             std::cin >> amount;
             if (!is_digit(amount)) {
                 std::cout << "Invalid amount.\n";
